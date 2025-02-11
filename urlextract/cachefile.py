@@ -112,7 +112,7 @@ class CacheFile:
         if not os.path.exists(dir_path_user):
             try:
                 os.makedirs(dir_path_user, exist_ok=True)
-            except PermissionError,OSError:
+            except (PermissionError,OSError):
                 # if PermissionError exception is raised we should continue
                 # and try to set the last fallback dir
                 pass
