@@ -235,19 +235,18 @@ class CacheFile:
 
         set_of_tlds: Set[str] = set()
 
-        with filelock.FileLock(self._get_cache_lock_file_path()):
-            with open(self._tld_list_path, "r") as f_cache_tld:
-                for line in f_cache_tld:
-                    tld = line.strip().lower()
-                    # skip empty lines
-                    if not tld:
-                        continue
-                    # skip comments
-                    if tld[0] == "#":
-                        continue
+        with open(self._tld_list_path, "r") as f_cache_tld:
+            for line in f_cache_tld:
+                tld = line.strip().lower()
+                # skip empty lines
+                if not tld:
+                    continue
+                # skip comments
+                if tld[0] == "#":
+                    continue
 
-                    set_of_tlds.add("." + tld)
-                    set_of_tlds.add("." + idna.decode(tld))
+                set_of_tlds.add("." + tld)
+                set_of_tlds.add("." + idna.decode(tld))
 
         return set_of_tlds
 
